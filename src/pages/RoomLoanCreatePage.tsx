@@ -25,46 +25,70 @@ export default function RoomLoanCreatePage() {
     setForm((prev) => ({ ...prev, [name]: value }));
   }
 
-  function validate(): string | null {
-    if (!form.roomName.trim()) return "Room name wajib diisi.";
-    if (!form.borrowerName.trim()) return "Borrower name wajib diisi.";
-    if (!form.startTime) return "Start time wajib diisi.";
-    if (!form.endTime) return "End time wajib diisi.";
-
-    const start = new Date(form.startTime);
-    const end = new Date(form.endTime);
-    if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime()))
-      return "Format tanggal tidak valid.";
-    if (end <= start) return "End time harus lebih besar dari start time.";
-
-    return null;
-  }
-
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
     setSuccessMsg(null);
 
-    const validationError = validate();
-    if (validationError) {
-      setError(validationError);
+    const { roomName, borrowerName, startTime, endTime } = form;
+
+    // ===============================
+    // VALIDASI FRONTEND (sebelum hit API)
+    // ===============================
+    if (!roomName.trim() || roomName.trim().length < 3) {
+      setError("Nama ruangan wajib diisi (minimal 3 karakter).");
       return;
     }
 
+    if (!borrowerName.trim() || borrowerName.trim().length < 3) {
+      setError("Nama peminjam wajib diisi (minimal 3 karakter).");
+      return;
+    }
+
+    if (!startTime) {
+      setError("Waktu mulai wajib diisi.");
+      return;
+    }
+
+    if (!endTime) {
+      setError("Waktu selesai wajib diisi.");
+      return;
+    }
+
+    const start = new Date(startTime);
+    const end = new Date(endTime);
+
+    if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) {
+      setError("Format waktu tidak valid.");
+      return;
+    }
+
+    if (end <= start) {
+      setError("Waktu selesai harus lebih besar dari waktu mulai.");
+      return;
+    }
+
+    // ===============================
+    // HIT API
+    // ===============================
     setLoading(true);
     try {
-      // datetime-local -> ISO (backend enak bacanya)
       const payload = {
-        roomName: form.roomName.trim(),
-        borrowerName: form.borrowerName.trim(),
-        startTime: new Date(form.startTime).toISOString(),
-        endTime: new Date(form.endTime).toISOString(),
+        roomName: roomName.trim(),
+        borrowerName: borrowerName.trim(),
+        startTime: start.toISOString(),
+        endTime: end.toISOString(),
       };
 
       await createRoomLoan(payload);
 
       setSuccessMsg("Berhasil menambah peminjaman!");
-      setForm({ roomName: "", borrowerName: "", startTime: "", endTime: "" });
+      setForm({
+        roomName: "",
+        borrowerName: "",
+        startTime: "",
+        endTime: "",
+      });
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "Gagal menambah peminjaman.",
