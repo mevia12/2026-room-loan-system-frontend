@@ -24,6 +24,7 @@ body {
   min-width: 320px;
   min-height: 100vh;
   display: block; /* penting: jangan flex center */
+  background-color: #ffbdc5;
 }
 
 a {
@@ -43,7 +44,51 @@ button {
   background-color: #ffffff;
   cursor: pointer;
 }
+.btn-save {
+  background: #dcfce7;
+  border: 1px solid #22c55e;
+  color: #166534;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
 
 button:hover {
   background-color: #f8fafc;
+}
+.search-container {
+  display: flex;
+  align-items: stretch; /* ⬅️ kunci tinggi sama */
+}
+
+/* input tetap punyamu */
+.search-container input {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid rgb(221, 221, 221);
+  background: white;
+  cursor: pointer;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+/* BUTTON PERSEGI */
+.search-container button {
+  width: 44px;              /* ⬅️ lebih pendek */
+  background: #670626;
+  border: none;
+  border-radius: 10px;      /* kotak tapi halus */
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-container button:hover {
+  background: #ffbdc5;
+}
+.search-container button i {
+  color: white;
+  font-size: 16px;
 }

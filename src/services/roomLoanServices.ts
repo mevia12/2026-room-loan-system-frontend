@@ -71,3 +71,15 @@ export async function updateRoomLoanStatus(
     throw new Error(text || "Failed to update status");
   }
 }
+
+// 🗑️ DELETE room loan
+export async function deleteRoomLoan(id: number): Promise<void> {
+  const res = await fetch(`${API_BASE_URL}/RoomLoans/${id}`, {
+    method: "DELETE",
+  });
+
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(text || "Failed to delete room loan");
+  }
+}

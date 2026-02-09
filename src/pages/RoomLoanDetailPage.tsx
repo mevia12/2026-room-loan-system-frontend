@@ -5,6 +5,7 @@ import {
   updateRoomLoanStatus,
   type RoomLoan,
 } from "../services/roomLoanServices";
+import "../index.css";
 
 export default function RoomLoanDetailPage() {
   const params = useParams();
@@ -124,7 +125,7 @@ export default function RoomLoanDetailPage() {
               <option value="Rejected">Rejected</option>
             </select>
 
-            <button
+            <button className="btn-save"
               onClick={async () => {
                 try {
                   setError(null);
