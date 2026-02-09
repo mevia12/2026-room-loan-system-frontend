@@ -17,9 +17,24 @@ export type CreateRoomLoanRequest = {
   endTime: string; // ISO
 };
 
+export type UpdateStatusRequest = {
+  status: "Pending" | "Approved" | "Rejected";
+};
+
 export async function getRoomLoans(): Promise<RoomLoan[]> {
   const res = await fetch(`${API_BASE_URL}/RoomLoans`);
   if (!res.ok) throw new Error("Failed to fetch room loans");
+  return res.json();
+}
+
+export async function getRoomLoanById(id: number): Promise<RoomLoan> {
+  const res = await fetch(`${API_BASE_URL}/RoomLoans/${id}`);
+
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(text || "Failed to fetch room loan detail");
+  }
+
   return res.json();
 }
 
@@ -33,10 +48,26 @@ export async function createRoomLoan(
   });
 
   if (!res.ok) {
-    // ambil detail error (kalau backend kirim)
     const text = await res.text();
     throw new Error(text || "Failed to create room loan");
   }
 
   return res.json();
+}
+
+// ✅ FIX: kirim body sebagai object { status: "Approved" }
+export async function updateRoomLoanStatus(
+  id: number,
+  status: UpdateStatusRequest["status"],
+): Promise<void> {
+  const res = await fetch(`${API_BASE_URL}/RoomLoans/${id}/status`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ status }),
+  });
+
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(text || "Failed to update status");
+  }
 }
