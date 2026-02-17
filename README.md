@@ -35,6 +35,8 @@ Frontend ini bertanggung jawab untuk:
 ---
 
 ## Struktur Folder
+
+<<<<<<< HEAD
 frontend/
 ├── public/
 ├── src/
@@ -52,6 +54,26 @@ frontend/
 ├── vite.config.ts
 └── README.md
 
+=======
+
+frontend/
+├── public/
+├── src/
+│ ├── assets/
+│ ├── components/
+│ ├── pages/
+│ ├── services/
+│ ├── styles/
+│ ├── types/
+│ ├── App.tsx
+│ ├── main.tsx
+│ └── index.css
+├── index.html
+├── package.json
+├── vite.config.ts
+└── README.md
+
+> > > > > > > 10c2fa5 (docs: add CHANGELOG.md and modified README.md)
 
 ---
 
@@ -88,31 +110,38 @@ Pastikan backend berjalan sebelum menjalankan frontend.
 
 1. Masuk ke folder frontend:
 
-
+<<<<<<< HEAD
 
 cd frontend
 
-
 2. Install dependency:
-
-
 
 npm install
 
-
 3. Jalankan development server:
-
-
 
 npx vite
 
-
 4. Buka browser:
-
-
 
 http://localhost:5173
 
+=======
+cd frontend
+
+2. Install dependency:
+
+npm install
+
+3. Jalankan development server:
+
+npx vite
+
+4. Buka browser:
+
+http://localhost:5173
+
+> > > > > > > 10c2fa5 (docs: add CHANGELOG.md and modified README.md)
 
 ---
 
@@ -125,6 +154,7 @@ Branch yang digunakan:
 - `feature/*` → pengembangan fitur
 
 Setiap fitur:
+
 1. Dibuat di branch `feature/*`
 2. Dibuat Pull Request ke `develop`
 3. Setelah diuji → merge ke `main`
